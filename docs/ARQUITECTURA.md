@@ -47,3 +47,25 @@ cuelgue de un arco del usuario en sesión.
   el host no es local.
 - Poner `RESEND_API_KEY` para que salgan los correos de verdad.
 - Limitar la petición de enlaces por IP y por correo. Hoy nada impide pedir mil.
+
+## El cielo y el arco
+
+Los dos componentes que separan a Día Uno del resto del rubro, y no son adorno:
+son la misma metáfora del producto.
+
+**El arco es la trayectoria de un sol.** Todos los trackers del mercado dibujan
+una rejilla estilo GitHub —hay apps que se llaman literalmente «Habit Heatmap»—.
+Aquí el tramo se dibuja como lo que su nombre dice: una curva. Cada día es un
+punto; los cumplidos encienden; el sol marca dónde vas. Verlo a un tercio del
+recorrido dice más que «día 30 de 90».
+
+**El cielo es tu hora local.** Ocho franjas, de madrugada a noche, con el
+degradado del fondo. Dos reglas que no se rompen:
+
+1. Ninguna franja aclara lo suficiente para que el texto blanco deje de leerse.
+   Cambia el tono, no el contraste.
+2. Ninguna franja es ámbar saturado. El ámbar es SOLO de lo cumplido; si el
+   atardecer fuera naranja, el único gesto de color del producto perdería su
+   significado. Por eso el atardecer tira a ciruela.
+
+Para revisarlo sin esperar a que anochezca: `/panel?hora=19`.
