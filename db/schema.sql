@@ -21,6 +21,10 @@ CREATE TABLE IF NOT EXISTS enlaces (
   email       citext NOT NULL,
   expira_en   timestamptz NOT NULL,
   usado_en    timestamptz,
+  -- Un enlace de un uso se quema con cualquier cosa que lo pre-cargue: la
+  -- vista previa de WhatsApp, un escáner de correo, el prefetch del navegador.
+  -- Los de demostración se marcan reutilizables hasta que caducan.
+  multiuso    boolean NOT NULL DEFAULT false,
   creado_en   timestamptz NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS enlaces_email_idx ON enlaces (email);

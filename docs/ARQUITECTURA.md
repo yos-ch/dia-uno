@@ -94,3 +94,18 @@ que el gesto se sienta continuo en vez de a saltos.
 
 En móvil el arco se peralta (lienzo 420×300 en vez de 620×270) porque con la
 proporción de escritorio saldría casi plano en un teléfono.
+
+## Dos trampas del acceso por enlace
+
+**Un enlace de un solo uso se quema con cualquier cosa que lo pre-cargue.** La
+vista previa de WhatsApp, un escáner de correo corporativo, el prefetch del
+navegador, la pantalla intermedia de un túnel: todos hacen un GET antes de que
+la persona toque nada, y el enlace llega gastado. Por eso `enlaces` tiene
+`multiuso`: los de verdad siguen siendo de un uso, y los de demostración se
+marcan reutilizables hasta que caducan. Si algún día molesta en producción, el
+arreglo estándar es no consumir en el GET sino en un POST de confirmación.
+
+**Detrás de un proxy, `req.url` trae el host INTERNO.** Redirigir con él manda
+a la gente a `localhost:3000` y el acceso parece roto aunque haya funcionado.
+Hay que construir el destino con `x-forwarded-host` y `x-forwarded-proto`.
+Pasa con ngrok, con Cloudflare y con cualquier balanceador delante.

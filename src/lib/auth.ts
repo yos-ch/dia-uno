@@ -33,10 +33,13 @@ export async function crearEnlace(email: string): Promise<string> {
  */
 export async function canjearEnlace(t: string): Promise<Usuario | null> {
   const [fila] = await sql`
-    SELECT token, email FROM enlaces
-    WHERE token = ${t} AND usado_en IS NULL AND expira_en > now()`;
+    SELECT token, email, multiuso FROM enlaces
+    WHERE token = ${t} AND expira_en > now()
+      AND (usado_en IS NULL OR multiuso)`;
   if (!fila || !igual(fila.token, t)) return null;
 
+  // Los normales se queman al usarse. Los reutilizables solo anotan la última
+  // vez, para poder ver si alguien anda entrando con uno viejo.
   await sql`UPDATE enlaces SET usado_en = now() WHERE token = ${t}`;
 
   const [usuario] = await sql<Usuario[]>`

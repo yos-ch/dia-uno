@@ -13,8 +13,15 @@ export async function GET(
   const pedido = req.nextUrl.searchParams.get('siguiente');
   const seguro = pedido && pedido.startsWith('/') && !pedido.startsWith('//')
     ? pedido : '/panel';
+  const destino = usuario ? seguro : '/?caducado=1';
 
-  // Un enlace caducado o ya usado devuelve a la portada con un aviso, nunca a
-  // una pantalla de error: casi siempre es alguien que abrió el correo tarde.
-  return NextResponse.redirect(new URL(usuario ? seguro : '/?caducado=1', req.url));
+  // Detrás de un proxy —ngrok, Cloudflare, un balanceador— req.url trae el host
+  // INTERNO. Si redirigimos con él, el teléfono acaba en localhost:3411 y el
+  // acceso parece roto aunque haya funcionado. Hay que mirar las cabeceras.
+  const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host');
+  const proto = req.headers.get('x-forwarded-proto')
+    ?? (host?.startsWith('localhost') ? 'http' : 'https');
+  const base = host ? `${proto}://${host}` : req.url;
+
+  return NextResponse.redirect(new URL(destino, base));
 }
