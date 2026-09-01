@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Día Uno
 
-## Getting Started
+> Tu arco no empieza en invierno. Empieza el día que decides ser tu mejor versión.
 
-First, run the development server:
+Un seguidor de hábitos para un tramo con principio y final. Eliges cuándo
+empieza —hoy, el lunes, en enero—, qué vas a sostener, y cuántos días dura.
+Después solo hay que marcar.
+
+![El panel](docs/panel.png)
+
+## Cómo se levanta
+
+Hace falta Node 22 y un Postgres. Nada más.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local        # y rellena DATABASE_URL
+createdb dia_uno
+psql -d dia_uno -f db/schema.sql
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sin `RESEND_API_KEY` no se envía correo: el enlace de acceso sale por la
+consola del servidor y también en pantalla. Así se puede probar el flujo
+entero sin contratar nada.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pruebas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+node --experimental-strip-types pruebas/fechas.mjs
+```
 
-## Learn More
+Cubren lo que de verdad se puede romper: el cálculo del día del arco, los
+cambios de mes y de año, el horario de verano y las reglas de la racha.
 
-To learn more about Next.js, take a look at the following resources:
+## Decisiones que conviene conocer
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**El día lo pone el navegador, no el servidor.** En producción el servidor
+corre en UTC; si calculara ahí la fecha, a partir de las 18:00 de México ya
+estaría contando el día siguiente. Por eso `Tablero` espera a montar antes de
+saber qué día es, y mientras enseña un esqueleto.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**El ámbar solo marca lo cumplido.** Es el único color del producto. Si se usa
+para decorar, deja de significar algo.
 
-## Deploy on Vercel
+**Un arco vivo por persona.** Lo garantiza un índice único en la base, no la
+aplicación. La idea es el compromiso con un tramo, no una lista de proyectos.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Más detalle en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) y
+[docs/MODELO-DATOS.md](docs/MODELO-DATOS.md).

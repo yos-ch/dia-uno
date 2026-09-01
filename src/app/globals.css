@@ -1,26 +1,51 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Día Uno · un solo tema, deliberado: el invierno no tiene modo claro.
+   Todo se pinta explícito, nada hereda del navegador. */
+:root{
+  --noche:#0B111C;        /* el fondo, azul de madrugada */
+  --losa:#131C2B;         /* tarjetas */
+  --losa-alta:#1B2637;    /* lo que se levanta */
+  --linea:#243147;
+  --tinta:#E9EFF8;
+  --tinta-2:#93A4BE;
+  --tinta-3:#5E708C;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-noche: var(--noche);
+  --color-losa: var(--losa);
+  --color-losa-alta: var(--losa-alta);
+  --color-linea: var(--linea);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-tinta-3: var(--tinta-3);
+  /* El ámbar se reserva para lo CUMPLIDO. Si se usa para decorar, deja de
+     significar algo y el producto pierde su único gesto de color. */
+  --color-brasa: #F2A65A;
+  --color-brasa-baja: #7A4F22;
+  --color-hielo: #6FB3D9;
+  --font-display: var(--fuente-display);
+  --font-sans: var(--fuente-cuerpo);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html { color-scheme: dark; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--noche);
+  color: var(--tinta);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* El foco tiene que verse: mucha gente navega esto con teclado. */
+:focus-visible {
+  outline: 2px solid var(--color-hielo, #6FB3D9);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
 }
