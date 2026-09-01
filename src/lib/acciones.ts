@@ -24,12 +24,17 @@ export async function pedirAcceso(_previo: unknown, datos: FormData) {
   const url = `${await origen()}/entrar/${token}`;
   const r = await enviarEnlace(email, url);
 
-  // En desarrollo no hay servicio de correo: devolvemos el enlace para poder
-  // seguir. En producción jamás, o cualquiera entraría con el correo de otro.
+  // Sin servicio de correo hay que poder entrar de alguna forma. En desarrollo
+  // se muestra el enlace sin más. En producción SOLO si el correo coincide con
+  // DEMO_EMAIL: enseñárselo a cualquiera sería dejar la puerta abierta, porque
+  // bastaría escribir el correo de otro para entrar como esa persona.
+  const demo = (process.env.DEMO_EMAIL ?? '').trim().toLowerCase();
+  const puedeVerlo = process.env.NODE_ENV !== 'production'
+    || (demo !== '' && email === demo);
+
   return r.enviado
     ? { listo: true as const }
-    : { listo: true as const,
-        enlace: process.env.NODE_ENV === 'production' ? undefined : url };
+    : { listo: true as const, enlace: puedeVerlo ? url : undefined };
 }
 
 export async function salir() {
