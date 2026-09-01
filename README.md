@@ -27,11 +27,13 @@ entero sin contratar nada.
 ## Pruebas
 
 ```bash
-node --experimental-strip-types pruebas/fechas.mjs
+pnpm pruebas
 ```
 
 Cubren lo que de verdad se puede romper: el cálculo del día del arco, los
-cambios de mes y de año, el horario de verano y las reglas de la racha.
+cambios de mes y de año, el horario de verano, las reglas de la racha y la
+geometría del arco —incluida la inversa de la elipse, que ya cazó un fallo por
+el que tocabas un día y respondía otro.
 
 ## Decisiones que conviene conocer
 

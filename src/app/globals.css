@@ -49,3 +49,7 @@ body {
     transition-duration: .01ms !important;
   }
 }
+
+/* El sol respira. Muy despacio: es un fondo, no un aviso. */
+@keyframes latido-sol { 0%,100%{opacity:.85; transform:scale(1)} 50%{opacity:1; transform:scale(1.06)} }
+.sol-late { animation: latido-sol 6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }

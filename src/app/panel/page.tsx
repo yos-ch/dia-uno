@@ -13,24 +13,32 @@ export default async function Panel() {
 
   return (
     <main className="min-h-dvh">
-      <nav className="border-b border-linea">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-6 py-4">
+      <nav className="border-b border-linea/60">
+        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3
+                        px-5 py-3 sm:px-6 sm:py-4">
           <span className="font-display text-sm uppercase tracking-[0.2em] text-brasa">
             Día Uno
           </span>
-          <div className="flex items-center gap-4 text-sm text-tinta-3">
-            <span className="hidden sm:inline">{u.email}</span>
+          <div className="flex items-center gap-1 text-sm text-tinta-3 sm:gap-4">
+            <span className="hidden md:inline">{u.email}</span>
+            {/* Zonas de toque de 44 px: en el teléfono, un enlace de texto suelto
+                es imposible de acertar con el pulgar. */}
             <form action={archivarArco}>
-              <button className="hover:text-tinta-2 transition">Cerrar arco</button>
+              <button className="rounded-lg px-3 py-2.5 transition hover:bg-losa hover:text-tinta-2">
+                <span className="sm:hidden">Cerrar</span>
+                <span className="hidden sm:inline">Cerrar arco</span>
+              </button>
             </form>
             <form action={salir}>
-              <button className="hover:text-tinta-2 transition">Salir</button>
+              <button className="rounded-lg px-3 py-2.5 transition hover:bg-losa hover:text-tinta-2">
+                Salir
+              </button>
             </form>
           </div>
         </div>
       </nav>
 
-      <div className="mx-auto max-w-2xl px-6 py-10">
+      <div className="mx-auto max-w-2xl px-5 py-8 sm:px-6 sm:py-10">
         <Tablero arco={arco} />
       </div>
     </main>

@@ -69,3 +69,28 @@ degradado del fondo. Dos reglas que no se rompen:
    significado. Por eso el atardecer tira a ciruela.
 
 Para revisarlo sin esperar a que anochezca: `/panel?hora=19`.
+
+## El arco se toca
+
+Arrastras el dedo por la curva y los puntos cercanos crecen, tipo dock, con la
+ficha del día abriéndose debajo: qué hiciste y qué no, ese día concreto.
+
+Tres decisiones que hacen que se sienta bien:
+
+**Se mapea por ángulo, no por posición horizontal.** Con la x, un píxel cerca
+del borde saltaría diez días, porque allí el arco es casi vertical. Con el
+ángulo puedes trazar la curva con el dedo y responde parejo de punta a punta.
+
+**Hay que invertir la elipse, no el círculo.** Los puntos se colocan con el
+ángulo *paramétrico* de una elipse (`rx ≠ ry`), que no es el ángulo geométrico
+desde el centro. Sin dividir por cada radio antes del `atan2`, tocabas el día
+22 y respondía el 17. Lo cazó `pruebas/arco.mjs`.
+
+**La lupa solo aparece al tocar.** En reposo el arco se ve limpio; si el bulto
+estuviera siempre sobre el día de hoy, parecería un defecto.
+
+El aumento es una campana (`e^-(d/alcance)²`), no un escalón: es lo que hace
+que el gesto se sienta continuo en vez de a saltos.
+
+En móvil el arco se peralta (lienzo 420×300 en vez de 620×270) porque con la
+proporción de escritorio saldría casi plano en un teléfono.

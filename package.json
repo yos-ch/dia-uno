@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "pruebas": "node --experimental-strip-types pruebas/fechas.mjs && node --experimental-strip-types pruebas/arco.mjs"
   },
   "dependencies": {
     "jose": "^6.2.10",
