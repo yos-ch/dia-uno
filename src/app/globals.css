@@ -29,9 +29,22 @@
   --font-sans: var(--fuente-cuerpo);
 }
 
-html { color-scheme: dark; }
+/* El cielo va en html, no en un div dentro del árbol. El fondo del elemento
+   raíz se propaga al lienzo del navegador: cubre la ventana entera, el rebote
+   al hacer scroll de más y cualquier franja que quede por debajo del contenido.
+   Un div, por fijo que sea, deja hueco en esos bordes. */
+html {
+  color-scheme: dark;
+  min-height: 100%;
+  /* Sin `fixed`: en Safari de iOS ese valor lleva años dando problemas de
+     pintado. No hace falta — el fondo del raíz cubre el lienzo igual. */
+  background:
+    linear-gradient(180deg, var(--cielo-a, #0B111C) 0%, var(--cielo-b, #101A2E) 100%)
+    no-repeat;
+  transition: background 3s linear;
+}
 body {
-  background: var(--noche);
+  background: transparent;
   color: var(--tinta);
   -webkit-font-smoothing: antialiased;
 }

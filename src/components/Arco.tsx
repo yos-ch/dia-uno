@@ -27,6 +27,23 @@ export default function Arco({
   const [foco, setFoco] = useState<number | null>(null);
   const [tocando, setTocando] = useState(false);
 
+  /* En móvil, `touch-action: none` no siempre basta: si el navegador ya decidió
+     que el gesto es un scroll, sigue desplazando la página aunque arrastres
+     sobre los puntos. Hay que cancelarlo a mano, y para eso el escucha tiene
+     que ser NO pasivo —React los registra pasivos y ahí preventDefault se
+     ignora sin avisar—. Por eso se engancha a pelo sobre el nodo. */
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const frenar = (e: TouchEvent) => { e.preventDefault(); };
+    svg.addEventListener('touchmove', frenar, { passive: false });
+    svg.addEventListener('touchstart', frenar, { passive: false });
+    return () => {
+      svg.removeEventListener('touchmove', frenar);
+      svg.removeEventListener('touchstart', frenar);
+    };
+  }, []);
+
   // En un teléfono el lienzo es estrecho: si mantuviéramos la proporción de
   // escritorio el arco saldría casi plano. Se peralta.
   const [movil, setMovil] = useState(false);

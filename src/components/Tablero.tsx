@@ -28,6 +28,15 @@ export default function Tablero({ arco }: { arco: DatosArco }) {
     const id = setInterval(leer, 60_000);
     return () => clearInterval(id);
   }, []);
+
+  // El cielo se escribe en el elemento raíz para que cubra el lienzo entero.
+  useEffect(() => {
+    if (hora === null) return;
+    const c = cieloAhora(hora);
+    const raiz = document.documentElement;
+    raiz.style.setProperty('--cielo-a', c.arriba);
+    raiz.style.setProperty('--cielo-b', c.abajo);
+  }, [hora]);
   const nDia = dia ? diaDelArco(arco.empieza, dia) : 0;
   const arrancado = nDia >= 1;
 
@@ -71,12 +80,6 @@ export default function Tablero({ arco }: { arco: DatosArco }) {
 
   return (
     <div className="space-y-10">
-      {/* El cielo a tu hora. Detrás de todo, sin robar contraste al texto. */}
-      <div
-        aria-hidden
-        className="fixed inset-0 -z-10 transition-[background] duration-[3000ms]"
-        style={{ background: `linear-gradient(180deg, ${cielo.arriba} 0%, ${cielo.abajo} 100%)` }}
-      />
       <header>
         <p className="font-display text-sm uppercase tracking-[0.18em] text-tinta-3">
           {arco.titulo}

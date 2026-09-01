@@ -109,3 +109,21 @@ arreglo estándar es no consumir en el GET sino en un POST de confirmación.
 a la gente a `localhost:3000` y el acceso parece roto aunque haya funcionado.
 Hay que construir el destino con `x-forwarded-host` y `x-forwarded-proto`.
 Pasa con ngrok, con Cloudflare y con cualquier balanceador delante.
+
+## Dos detalles que solo se ven en un teléfono
+
+**El fondo va en `html`, no en un div.** Un `div` fijo deja franja: por debajo
+del contenido, en el rebote del scroll, y en el hueco que aparece cuando el
+navegador móvil esconde la barra de direcciones. El fondo del elemento raíz se
+propaga al lienzo y cubre todo eso. Se pinta desde JS con dos variables CSS
+(`--cielo-a`, `--cielo-b`) para que siga cambiando con la hora.
+
+Sin `background-attachment: fixed`: en Safari de iOS lleva años dando problemas
+de pintado, y aquí no aporta nada.
+
+**`touch-action: none` no basta para bloquear el scroll.** Si el navegador ya
+decidió que el gesto es un desplazamiento, sigue desplazando aunque arrastres
+sobre los puntos. Hay que cancelarlo con `preventDefault`, y para eso el
+escucha tiene que ser NO pasivo: React los registra pasivos y ahí
+`preventDefault` se ignora sin decir nada. Por eso el arco engancha
+`touchmove` a pelo sobre el nodo con `{ passive: false }`.
